@@ -1,0 +1,17 @@
+{
+  "language": "vue",
+  "project_name": "tctm-vue3-h5-template-fe",
+  "group_id": "",
+  "project_version": "1.0.1",
+  "description": "投放渠道h5",
+  "deployable": true,
+  "scm_url": "git@gitlab.tctm.life:tctm-fe/tctm-vue3-h5-template-fe.git",
+  "acl": [],
+  "command": {
+    "build": "npm install --registry=https://nexus.tctm.life/repository/npm-public/ && npm run pipeline:$ENV$",
+    "quality-analysis": "npm run lint",
+    "style-check": "npm run lint",
+    "unit-test": ""
+  },
+  "dependency": []
+}
