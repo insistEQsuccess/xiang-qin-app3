@@ -12,14 +12,28 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/list/list.vue')
   },
   {
-    path: '/info',
-    name: 'Info',
-    component: () => import('@/views/info/info.vue')
-  },
-  {
     path: '/info1',
     name: 'Info1',
+    meta: {
+      title: '完善信息'
+    },
     component: () => import('@/views/info/info1.vue')
+  },
+  {
+    path: '/info2',
+    name: 'Info2',
+    meta: {
+      title: '您的自身条件'
+    },
+    component: () => import('@/views/info/info2.vue')
+  },
+  {
+    path: '/info3',
+    name: 'Info3',
+    meta: {
+      title: '您的求偶要求'
+    },
+    component: () => import('@/views/info/info3.vue')
   },
 ]
 

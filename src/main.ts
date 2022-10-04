@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { Calendar, Cascader, Popup } from 'vant';
+import { Calendar, Cascader, Popup, Slider } from 'vant';
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
@@ -13,4 +13,5 @@ const app = createApp(App)
 app.use(Calendar)
 app.use(Cascader)
 app.use(Popup)
+app.use(Slider)
 app.use(store).use(router).mount('#app')
