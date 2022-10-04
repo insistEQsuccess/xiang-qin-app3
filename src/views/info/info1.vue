@@ -214,6 +214,8 @@ export default defineComponent({
   opacity: 0;
 }
 .info1-box{
+  max-width: 750px;
+  overflow: hidden;
   .info-item{
     display: flex;
     justify-content: space-between;
@@ -266,6 +268,7 @@ export default defineComponent({
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        overflow-x: auto;
         .img1-box{
           position: relative;
           flex-shrink: 0;
