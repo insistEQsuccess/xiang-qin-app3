@@ -73,7 +73,6 @@ export default defineComponent({
   setup () {
     interface Dict { [k: string]: any }
     const $router = useRouter()
-    const formData = reactive({ isPublic: 0 })
     const imgList = reactive<any[]>([])
     const ruleForm = reactive<Dict>({
       // 注册接口字段和注释
@@ -91,6 +90,19 @@ export default defineComponent({
       //是否公开联系方式 0否 1是
       publishInfoEnable: 1
     })
+    const msgObj: Dict = {
+      name: '名称', //* 名称
+      weChatOpenId: '微信登录id', //* 微信登录id
+      qqOpenId: 'QQ登录id', //* QQ登录id
+      ////登录类型：1-手机一键注册 2-微信注册 3-qq注册 4-手机验证吗注册 5-账号登陆
+      type: '登录类型', 
+      icon: '头像', //* 头像
+      nickName: '昵称', //* 昵称
+      lifePhoto: '生活照', //* 生活照 逗号拼接
+      cellPhone: '手机号', //* 手机号
+      verifyCode: '验证码', //* 验证码
+      persalSign: '个性签名', //* 个性签名 暂时无用
+    }
     function onPublicChange (e: any) {
       if (e.target.value == 1) {
         Dialog.confirm({
@@ -101,7 +113,6 @@ export default defineComponent({
           console.log('on confirm')
         }).catch(() => {
           console.log('on cancel')
-          formData.isPublic = 0
         });
       }
     }
@@ -168,12 +179,26 @@ export default defineComponent({
     function goInfo3 () {
       $router.push('/info3')
     }
+    function onSbumit () {
+      const info2_param = JSON.parse(sessionStorage.getItem('info2_param') || '{}')
+      const info3_param = JSON.parse(sessionStorage.getItem('info3_param') || '{}')
+      if (!info2_param.info2Done) {
+        return Toast('请完善您的自身需求')
+      }
+      if (!info3_param.info3Done) {
+        return Toast('请完善您的求偶需求')
+      }
+      console.log('info2_param')
+      console.log(info2_param)
+      console.log('info3_param')
+      console.log(info3_param)
+    }
     return {
+      onSbumit,
       onFileInputChange1,
       onFileInputChange2,
       onDelLifeImg,
       ruleForm,
-      formData,
       imgList,
       goInfo2,
       goInfo3,

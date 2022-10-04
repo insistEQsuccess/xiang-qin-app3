@@ -164,6 +164,7 @@
 
 <script lang="ts">
   import { defineComponent, reactive, ref } from 'vue'
+  import { useRouter } from 'vue-router'
   import { Toast } from 'vant'
   const cityJSON = require('../../assets/city.json') // '@/assets/city.json'
   import HeightJSON from '@/assets/height'
@@ -172,7 +173,9 @@
     name: 'Info',
     setup () {
       interface Dict { [k: string]: any }
+      const $router = useRouter()
       const ruleForm = reactive<Dict>({
+        info2Done: false,
         areaName: '',
         // 我的性格  字段值 和 含义
         // 1更要求性格，踏踏实实过日子的，性格好
@@ -263,7 +266,10 @@
         if (msg) {
           return Toast('请完善【' + msg + '】')
         }
+        sendData.info2Done = true;
         console.log(sendData)
+        sessionStorage.setItem('info2_param', JSON.stringify(sendData))
+        $router.push('/info1')
       }
       return {
         onSbumit,

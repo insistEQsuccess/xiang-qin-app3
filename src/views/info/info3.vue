@@ -103,12 +103,15 @@
 
 <script lang="ts">
   import { defineComponent, reactive, ref } from 'vue'
+  import { useRouter } from 'vue-router'
   import { Toast } from 'vant';
   export default defineComponent({
     name: 'Info',
     setup () {
       interface Dict { [k: string]: any }
+      const $router = useRouter()
       const ruleForm = reactive<Dict>({
+        info3Done: false,
         ageArr: [20, 25], // +++++++
         spouseBirthStart: '', //配偶的最小年龄 +++++++
         spouseBirthEnd: '', //配偶的最大年龄 +++++++
@@ -150,7 +153,10 @@
         if (msg) {
           return Toast(msg)
         }
+        sendData.info3Done = true
         console.log(sendData)
+        sessionStorage.setItem('info3_param', JSON.stringify(sendData))
+        $router.push('/info1')
       }
       return {
         onSbumit,
