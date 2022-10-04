@@ -35,6 +35,14 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('@/views/info/info3.vue')
   },
+  {
+    path: '/login',
+    name: 'Login',
+    meta: {
+      title: '登录'
+    },
+    component: () => import('@/views/login/login.vue')
+  },
 ]
 
 const router = createRouter({
