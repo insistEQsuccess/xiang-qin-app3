@@ -67,7 +67,7 @@
 import { defineComponent, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { Dialog, Toast } from 'vant';
-import { uploadImg } from '@/apis/url'
+import { uploadImg, registerUser } from '@/apis/url'
 export default defineComponent({
   name: 'Info1',
   setup () {
@@ -179,9 +179,12 @@ export default defineComponent({
     function goInfo3 () {
       $router.push('/info3')
     }
-    function onSbumit () {
+    async function onSbumit () {
       const info2_param = JSON.parse(sessionStorage.getItem('info2_param') || '{}')
       const info3_param = JSON.parse(sessionStorage.getItem('info3_param') || '{}')
+      if (!ruleForm.nickName) {
+        return Toast('请完善您的昵称')
+      }
       if (!info2_param.info2Done) {
         return Toast('请完善您的自身需求')
       }
@@ -192,6 +195,13 @@ export default defineComponent({
       console.log(info2_param)
       console.log('info3_param')
       console.log(info3_param)
+      const sendData = JSON.parse(JSON.stringify(ruleForm))
+      const ret = await registerUser({ ...sendData, ...info2_param, ...info3_param })
+      if (ret.code === 10000) {
+        
+      } else {
+        Toast(ret.message)
+      }
     }
     return {
       onSbumit,

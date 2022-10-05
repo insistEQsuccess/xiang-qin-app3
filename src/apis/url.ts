@@ -8,3 +8,5 @@ export const uploadImg = (data: any) => post('/user/icon/upload', data)
 export const loginFun = (data: any) => post('/user/login', data)
 // 获取验证码
 export const getCodeFun = (data: any) => post('/sms/send', data)
+// 注册用户
+export const registerUser = (data: any) => post('/user/register', data)
