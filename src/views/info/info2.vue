@@ -163,7 +163,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, ref } from 'vue'
+  import { defineComponent, reactive, ref, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
   import { Toast } from 'vant'
   const cityJSON = require('../../assets/city.json') // '@/assets/city.json'
@@ -222,6 +222,12 @@
       const showChooseArea = ref(false)
       const showChooseHeight = ref(false)
       const showChooseWeight = ref(false)
+      onMounted(() => {
+        const info2_param = JSON.parse(sessionStorage.getItem('info2_param') || '{}')
+        for (const k in ruleForm) {
+          ruleForm[k] = info2_param[k]
+        }
+      })
       function onConfirm (val: Date) {
         console.log(val)
         const y = val.getFullYear()
@@ -255,7 +261,6 @@
       function onSbumit () {
         const sendData = JSON.parse(JSON.stringify(ruleForm))
         console.log(sendData)
-        delete sendData.areaName
         let msg = ''
         for (const k in sendData) {
           if (sendData[k] === '') {

@@ -56,7 +56,7 @@
       <div class="item-h">
         <div class="h-txt">补充说明（选填）</div>
         <div class="img-wraper">
-          <textarea cols="30" rows="10" class="normal-txt" placeholder="选填，例如您的优势或特殊说明"></textarea>
+          <textarea cols="30" rows="10" class="normal-txt" v-model="ruleForm.persalSign" placeholder="选填，例如您的优势或特殊说明"></textarea>
         </div>
       </div>
     </div>
@@ -76,11 +76,11 @@ export default defineComponent({
     const imgList = reactive<any[]>([])
     const ruleForm = reactive<Dict>({
       // 注册接口字段和注释
-      name: '', //* 名称
+      // name: '', //* 名称
       weChatOpenId: '', //* 微信登录id
       qqOpenId: '', //* QQ登录id
       ////登录类型：1-手机一键注册 2-微信注册 3-qq注册 4-手机验证吗注册 5-账号登陆
-      type: '', 
+      type: 4, 
       icon: 'https://img1.baidu.com/it/u=867274163,2110018517&fm=253&fmt=auto&app=138&f=JPEG?w=329&h=448', //* 头像
       nickName: '', //* 昵称
       lifePhoto: '', //* 生活照 逗号拼接
@@ -90,19 +90,6 @@ export default defineComponent({
       //是否公开联系方式 0否 1是
       publishInfoEnable: 1
     })
-    const msgObj: Dict = {
-      name: '名称', //* 名称
-      weChatOpenId: '微信登录id', //* 微信登录id
-      qqOpenId: 'QQ登录id', //* QQ登录id
-      ////登录类型：1-手机一键注册 2-微信注册 3-qq注册 4-手机验证吗注册 5-账号登陆
-      type: '登录类型', 
-      icon: '头像', //* 头像
-      nickName: '昵称', //* 昵称
-      lifePhoto: '生活照', //* 生活照 逗号拼接
-      cellPhone: '手机号', //* 手机号
-      verifyCode: '验证码', //* 验证码
-      persalSign: '个性签名', //* 个性签名 暂时无用
-    }
     function onPublicChange (e: any) {
       if (e.target.value == 1) {
         Dialog.confirm({
@@ -182,6 +169,7 @@ export default defineComponent({
     async function onSbumit () {
       const info2_param = JSON.parse(sessionStorage.getItem('info2_param') || '{}')
       const info3_param = JSON.parse(sessionStorage.getItem('info3_param') || '{}')
+      const login_param = { cellPhone: 15633332222, verifyCode: 6252 } // JSON.parse(sessionStorage.getItem('login_param') || '{}')
       if (!ruleForm.nickName) {
         return Toast('请完善您的昵称')
       }
@@ -196,7 +184,7 @@ export default defineComponent({
       console.log('info3_param')
       console.log(info3_param)
       const sendData = JSON.parse(JSON.stringify(ruleForm))
-      const ret = await registerUser({ ...sendData, ...info2_param, ...info3_param })
+      const ret = await registerUser({ ...sendData, ...info2_param, ...info3_param, ...login_param })
       if (ret.code === 10000) {
         
       } else {

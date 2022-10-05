@@ -102,7 +102,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, ref } from 'vue'
+  import { defineComponent, reactive, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
   import { Toast } from 'vant';
   export default defineComponent({
@@ -134,6 +134,13 @@
         spouseJob1: '请选择期望配偶的工作性质', //配偶的工作性质 0 无要求 1 国企
         spousehHouse: '请选择期望配偶的住房情况', //配偶住房情况 0无要求1必须有房2可以无房但是能够随时购买
       }
+      onMounted(() => {
+        const info3_param = JSON.parse(sessionStorage.getItem('info3_param') || '{}')
+        for (const k in ruleForm) {
+          ruleForm[k] = info3_param[k]
+        }
+        ruleForm.ageArr = [info3_param.spouseBirthEnd, info3_param.spouseBirthStart]
+      })
       function onAgeChange (val: any[]) {
         console.log('年龄范围：', val);
         ruleForm.spouseBirthStart = val[0]
