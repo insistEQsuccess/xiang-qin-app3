@@ -169,7 +169,7 @@ export default defineComponent({
     async function onSbumit () {
       const info2_param = JSON.parse(sessionStorage.getItem('info2_param') || '{}')
       const info3_param = JSON.parse(sessionStorage.getItem('info3_param') || '{}')
-      const login_param = { cellPhone: 15633332222, verifyCode: 6252 } // JSON.parse(sessionStorage.getItem('login_param') || '{}')
+      const login_param = JSON.parse(sessionStorage.getItem('login_param') || '{}') // { cellPhone: 15633332222, verifyCode: 6252 }
       if (!ruleForm.nickName) {
         return Toast('请完善您的昵称')
       }
@@ -185,8 +185,9 @@ export default defineComponent({
       console.log(info3_param)
       const sendData = JSON.parse(JSON.stringify(ruleForm))
       const ret = await registerUser({ ...sendData, ...info2_param, ...info3_param, ...login_param })
-      if (ret.code === 10000) {
-        
+      if (ret.code === 100000) {
+        Toast('注册成功！')
+        $router.push('/list')
       } else {
         Toast(ret.message)
       }
