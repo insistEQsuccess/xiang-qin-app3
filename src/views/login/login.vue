@@ -27,11 +27,13 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { loginFun, getCodeFun } from '@/apis/url'
 import { Toast } from 'vant'
 
 export default defineComponent({
   setup() {
+    const $router = useRouter();
     const ruleForm = reactive({
       cellPhone: '', 
       type: 4,
@@ -44,11 +46,11 @@ export default defineComponent({
       if (number < 60) {
         return Toast(`请${number}秒后重试`)
       }
-      const ret = await getCodeFun({ cellPhone: ruleForm.cellPhone })
-      if (ret.code === 10000) {
-
+      const ret = await getCodeFun({ cellPhone: ruleForm.cellPhone, type: 2 })
+      if (ret.code === 100000) {
+        Toast('验证码发送成功')
       } else {
-
+        Toast(ret.message)
       }
       timer = setInterval(() => {
         if (number < 0) {
@@ -72,7 +74,17 @@ export default defineComponent({
       }
       const ret = await loginFun(ruleForm)
       if (ret.code === 100000) {
-
+        if (!ret.data.perfect) {
+          Toast('为查询到用户信息，请您注册')
+          const sendData = JSON.parse(JSON.stringify(ruleForm))
+          delete sendData.type
+          sessionStorage.setItem('login_param', JSON.stringify(sendData))
+          setTimeout(() => {
+            $router.push('/info1')
+          }, 1000);
+        } else {
+          Toast(ret.message)
+        }
       } else {
         Toast(ret.message)
       }
