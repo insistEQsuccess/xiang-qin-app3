@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-import { loginFun } from '@/apis/url'
+import { loginFun, getCodeFun } from '@/apis/url'
 import { Toast } from 'vant'
 
 export default defineComponent({
@@ -40,12 +40,22 @@ export default defineComponent({
     const codeMsg = ref('获取验证码')
     let number = 60
     let timer: any = null
-    function onGetCode () {
+    async function onGetCode () {
+      if (number < 60) {
+        return Toast(`请${number}秒后重试`)
+      }
+      const ret = await getCodeFun({ cellPhone: ruleForm.cellPhone })
+      if (ret.code === 10000) {
+
+      } else {
+
+      }
       timer = setInterval(() => {
         if (number < 0) {
           number = 60
           codeMsg.value = '获取验证码'
           clearInterval(timer)
+          return;
         }
         codeMsg.value = number + '秒'
         number--
