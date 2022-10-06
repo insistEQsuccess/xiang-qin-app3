@@ -18,7 +18,7 @@
       征婚交友
     </div>
     <div className="pic-box">
-      <img :src='ruleForm.lifePhoto || ruleForm.icon' alt="../../assets/img/women.png"/>
+      <img :src='lifePhoto || icon' alt="../../assets/img/women.png"/>
     </div>
     <div className="info-title">
       <div className="info-icon">
@@ -29,7 +29,7 @@
       自我介绍
     </div>
     <ul className="info-box">
-      <li v-for="(it, index) in ruleForm.selfIntroduce" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
+      <li v-for="(it, index) in selfIntroduce" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
       <!-- <li>会员号：<span>2111121320</span></li>
       <li>性别：<span>女</span></li>
       <li>出生年月：<span>1990-05-02</span></li>
@@ -53,19 +53,19 @@
       择偶要求
     </div>
     <ul className="info-box">
-      <li v-for="(it, index) in ruleForm.spouseDemand" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
+      <li v-for="(it, index) in spouseDemand" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
       <!-- <li>年龄：<span>30 岁 ~ 35 岁</span></li>
       <li>婚姻状况：<span>不限</span></li>
       <li>身高：<span>172 CM ~ 180 CM</span></li>
       <li>民族：<span>汉族</span></li> -->
     </ul>
     <ul className="info-box">
-      <li v-for="(it, index) in ruleForm.spouseRemark" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
+      <li v-for="(it, index) in spouseRemark" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
     </ul>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getDetails } from '@/apis/url'
 import { Toast } from 'vant'
@@ -75,27 +75,43 @@ export default defineComponent({
   setup() {
     interface Dict { [k: string]: any }
     const $route = useRoute();
-    const ruleForm = reactive<Dict>({
-      icon: '',
-      lifePhoto: '',
-      selfIntroduce: [],
-      spouseDemand: [],
-      spouseRemark: []
-    })
     const userId = $route.query.userId
+    const icon = ref('')
+    const lifePhoto = ref('')
+    const selfIntroduce = reactive<any[]>([])
+    const spouseDemand = reactive<any[]>([])
+    const spouseRemark = reactive<any[]>([])
     async function getData () {
       const ret = await getDetails({ userId })
       if (ret.code === 100000) {
-        for (const k in ruleForm) {
-          ruleForm[k] = ret.data[k]
-        }
+        icon.value = ret.data.icon
+        lifePhoto.value = ret.data.lifePhoto
+        selfIntroduce.length = 0
+        selfIntroduce.push(...ret.data.selfIntroduce)
+        spouseDemand.length = 0
+        spouseDemand.push(...ret.data.spouseDemand)
+        spouseRemark.length = 0
+        spouseRemark.push(...ret.data.spouseRemark)
       } else {
         Toast(ret.message)
       }
     }
     getData()
+    watch(
+      $route,
+      (to) => {
+        if (to.path === '/detail') {
+          getData()
+          location.reload()
+        }
+      }
+    )
     return {
-      ruleForm
+      icon,
+      lifePhoto,
+      selfIntroduce,
+      spouseDemand,
+      spouseRemark
     }
   },
 })
