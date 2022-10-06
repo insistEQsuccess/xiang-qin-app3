@@ -1,7 +1,7 @@
 <template>
   <div className="list-box">
     <div className="list-inner">
-        <div className="list-item" v-for="(it, ind) in list" :key="ind">
+        <div className="list-item" v-for="(it, ind) in list" :key="ind" @click="goToDetail(it)">
           <div className="item-box">
             <div className="img-box">
               <img :src="it.icon" alt="" />
@@ -14,7 +14,7 @@
               <div className="info-divider"></div>
               <div className="info-bottom">
                 <div className="info-msg">月薪：10000元/月 独生子</div>
-                <div className="info-msg">{{it.userTagList.map((item: any)=> item.tagName).join(' ')}}</div>
+                <div className="info-msg">{{it.userTagList.map((item)=> item.tagName).join(' ')}}</div>
               </div>
               <div className="info-divider"></div>
             </div>
@@ -48,20 +48,40 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { getList } from '@/apis/url'
+import { Toast } from 'vant'
 
 export default defineComponent({
   setup() {
+    const $router = useRouter()
     const list = reactive<any[]>([])
     async function getData () {
       const ret = await getList({})
       if (ret.code === 100000) {
         list.push(...ret.data.visitingCardVos)
+      } else {
+        Toast(ret.message)
       }
     }
     getData()
+    function goToDetail (it: any) {
+      const token = localStorage.getItem('token')
+      // if (!token) {
+      //   Toast('请您登陆')
+      //   $router.push('/login')
+      //   return;
+      // }
+      $router.push({
+        path: '/detail',
+        query: {
+          userId: it.userId
+        }
+      })
+    }
     return {
       list,
+      goToDetail,
       getData
     }
   },

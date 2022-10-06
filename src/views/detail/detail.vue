@@ -18,7 +18,7 @@
       征婚交友
     </div>
     <div className="pic-box">
-      <img src='../../assets/img/women.png' alt=""/>
+      <img :src='ruleForm.lifePhoto || ruleForm.icon' alt="../../assets/img/women.png"/>
     </div>
     <div className="info-title">
       <div className="info-icon">
@@ -29,7 +29,8 @@
       自我介绍
     </div>
     <ul className="info-box">
-      <li>会员号：<span>2111121320</span></li>
+      <li v-for="(it, index) in ruleForm.selfIntroduce" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
+      <!-- <li>会员号：<span>2111121320</span></li>
       <li>性别：<span>女</span></li>
       <li>出生年月：<span>1990-05-02</span></li>
       <li>属相：<span>马</span></li>
@@ -41,7 +42,7 @@
       <li>民族：<span>汉族</span> </li>
       <li>学历:  <span>专科</span></li>
       <li>目前所在地：<span>河南省 鹤壁市</span></li>
-      <li>籍贯所在：<span>河南省 安阳市 *</span></li>
+      <li>籍贯所在：<span>河南省 安阳市 *</span></li> -->
     </ul>
     <div className="info-title">
       <div className="info-icon">
@@ -52,20 +53,50 @@
       择偶要求
     </div>
     <ul className="info-box">
-      <li>年龄：<span>30 岁 ~ 35 岁</span></li>
+      <li v-for="(it, index) in ruleForm.spouseDemand" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
+      <!-- <li>年龄：<span>30 岁 ~ 35 岁</span></li>
       <li>婚姻状况：<span>不限</span></li>
       <li>身高：<span>172 CM ~ 180 CM</span></li>
-      <li>民族：<span>汉族</span></li>
+      <li>民族：<span>汉族</span></li> -->
+    </ul>
+    <ul className="info-box">
+      <li v-for="(it, index) in ruleForm.spouseRemark" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
     </ul>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
+import { useRoute } from 'vue-router'
+import { getDetails } from '@/apis/url'
+import { Toast } from 'vant'
 
 export default defineComponent({
   name: 'Detail',
   setup() {
-    
+    interface Dict { [k: string]: any }
+    const $route = useRoute();
+    const ruleForm = reactive<Dict>({
+      icon: '',
+      lifePhoto: '',
+      selfIntroduce: [],
+      spouseDemand: [],
+      spouseRemark: []
+    })
+    const userId = $route.query.userId
+    async function getData () {
+      const ret = await getDetails({ userId })
+      if (ret.code === 100000) {
+        for (const k in ruleForm) {
+          ruleForm[k] = ret.data[k]
+        }
+      } else {
+        Toast(ret.message)
+      }
+    }
+    getData()
+    return {
+      ruleForm
+    }
   },
 })
 </script>
@@ -176,7 +207,7 @@ export default defineComponent({
   .info-title{
     display: flex;
     align-items: center;
-    margin: 20px 0 30px;
+    margin: 20px 0 20px;
     font-size: 22px;
     font-weight: bold;
     color: rgb(216, 21, 97);
@@ -206,11 +237,12 @@ export default defineComponent({
     flex-direction: column;
     align-items: flex-start;
     li{
-      height: 40px;
+      // min-height: 40px;
+      margin-bottom: 10px;
       color: rgb(34, 34, 34);
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
-      font-size: 22px;
-      text-indent: 2em;
+      font-size: 20px;
+      padding-left: 1.5em;
     }
     span{
       color: rgb(102, 102, 102);
