@@ -5,9 +5,9 @@ export const getList = (data: any) => post('/blindDateWall/visitingCard/list', d
 // 上传文件
 export const uploadImg = (data: any) => post('/user/icon/upload', data)
 // login
-export const loginFun = (data: any) => post('/user/login', data)
+export const loginFun = (data: any, config?: any) => post('/user/login', data, config)
 // 获取验证码
-export const getCodeFun = (data: any) => post('/sms/send', data)
+export const getCodeFun = (data: any, config: any) => post('/sms/send', data, config)
 // 注册用户
 export const registerUser = (data: any) => post('/user/register', data)
 // 用户详情

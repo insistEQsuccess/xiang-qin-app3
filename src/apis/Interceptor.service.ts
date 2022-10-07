@@ -45,6 +45,10 @@ export class Interceptor {
     this.instance.interceptors.request.use(
       (config: any) => {
         // 如果需要鉴权，可以从这里做
+        // 'sign': localStorage.getItem('token') // 'ViS3Ox0QAksV+anIVBx0KSmorRkPUaUvvOCOF50YtQOIcFoyWV6VfwGbqPwABRRo5lvW2cjLpCVhJu9H/JALqcYoR52SpZQk8zGyKyx+5uOr/d9qhnNJj3+/uydDifPxD8YX6k3SzIiECr2QCWmOLBavnPDzqOmTuYAKe4Vn6eps+FUH0vgCiPLUQr6uzBGY26+WV4PW4sBtlJxpDit4YzCgYIJgXidrTnQ6VxiMg1U='
+        // 'sign': 'ViS3Ox0QAksV+anIVBx0KSmorRkPUaUvvOCOF50YtQOIcFoyWV6VfwGbqPwABRRo5lvW2cjLpCVhJu9H/JALqcYoR52SpZQk8zGyKyx+5uOr/d9qhnNJj3+/uydDifPxD8YX6k3SzIiECr2QCWmOLBavnPDzqOmTuYAKe4Vn6eps+FUH0vgCiPLUQr6uzBGY26+WV4PW4sBtlJxpDit4YzCgYIJgXidrTnQ6VxiMg1U='
+        
+        config.headers.sign = localStorage.getItem('token') || config.sign
         return config;
       },
       (error: any) => {

@@ -3,6 +3,15 @@ import store from '../store'
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: '/',
+    name: 'List',
+    meta: {
+      cache: false,
+      title: '详情'
+    },
+    component: () => import('@/views/list/list.vue')
+  },
+  {
     path: '/detail',
     name: 'Detail',
     meta: {
@@ -10,15 +19,6 @@ const routes: Array<RouteRecordRaw> = [
       title: '详情'
     },
     component: () => import('@/views/detail/detail.vue')
-  },
-  {
-    path: '/list',
-    name: 'List',
-    meta: {
-      cache: false,
-      title: '详情'
-    },
-    component: () => import('@/views/list/list.vue')
   },
   {
     path: '/info1',

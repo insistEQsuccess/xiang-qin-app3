@@ -11,9 +11,7 @@ export class Http {
     baseURL: baseURL,
     headers: {
       'content-type': 'application/json',
-      // 'sign': localStorage.getItem('token') // 'ViS3Ox0QAksV+anIVBx0KSmorRkPUaUvvOCOF50YtQOIcFoyWV6VfwGbqPwABRRo5lvW2cjLpCVhJu9H/JALqcYoR52SpZQk8zGyKyx+5uOr/d9qhnNJj3+/uydDifPxD8YX6k3SzIiECr2QCWmOLBavnPDzqOmTuYAKe4Vn6eps+FUH0vgCiPLUQr6uzBGY26+WV4PW4sBtlJxpDit4YzCgYIJgXidrTnQ6VxiMg1U='
-      'sign': 'ViS3Ox0QAksV+anIVBx0KSmorRkPUaUvvOCOF50YtQOIcFoyWV6VfwGbqPwABRRo5lvW2cjLpCVhJu9H/JALqcYoR52SpZQk8zGyKyx+5uOr/d9qhnNJj3+/uydDifPxD8YX6k3SzIiECr2QCWmOLBavnPDzqOmTuYAKe4Vn6eps+FUH0vgCiPLUQr6uzBGY26+WV4PW4sBtlJxpDit4YzCgYIJgXidrTnQ6VxiMg1U='
-    },
+      },
     timeout: 60000,
   }
   constructor() {
@@ -44,4 +42,4 @@ const http = new Http()
 
 export const get = (url: string, data: any) => http.get(url, data)
 
-export const post = (url: string, data: any) => http.post(url, data)
+export const post = (url: string, data: any, config?: any) => http.post(url, data, config)
