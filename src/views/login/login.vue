@@ -44,12 +44,11 @@ export default defineComponent({
     const codeMsg = ref('获取验证码')
     let number = 60
     let timer: any = null
-    const sign = 'ViS3Ox0QAksV+anIVBx0KWz5zYtbuFOzx5woUHyxyzi3ABGRGZmc77n4rfgjy0xKO2Q+0knGV4FlqeBYeuH4JD35LpPeqMnQOVqR82ZhjhKh+8mVh8mY4NCb0FHZmXNLx70BGWzMhNis437HcFPGa4yYVOOtfFBR+EvEQ71c2I/SDwSYvEcCVNjxM2PU6AZbsuA9UPrh519ohfaurfzRmnXaPmnUILax6Flw+67WxpH166UVSXFFFoh5FyJr3w4zUeBaNeTlXtg+HjW7QRUfsGjSoJ0QrD70GpdbAeSyiJJkKhUz28cEBbpcomeWbf3FU2XmdTAxKZ8wMTPhQI+2MAKsYuGN7rzrUqzxQPXt1esV8perUWU8YqG2UPYmEb2nfUr+SWUrG406HPLgIGmexT3WMIDg9VSSf7/INGXv9nSZuMAQIrvwcAnAO4wFFLDcpPKVVgrZ0CO+24Dq60Xd7+No22jR1KtSepez/A6cPAO7SbeI/f7TFvoUdy96/h5WsG57dUVqPAjsDtDsZ3FcC3rTnD1uXyqVY8tlosCUHCAO1T02gvTeJuy46Pbxl4ZrMNYyMbb6qNt3VaRU5ur0Q6f2KbLJjI931t6y7zubIxcnDPUqayUMTNKpW4Dxj485WnNx02XVBrQq3gz82i6sIXwQl4s+E6ggP6LuxMne4eVFS4EOKjlGcLaV6JeDJ4OTJ2J7AhnUc4O1FUlZ+bqSSaIC7NBypQdzJ7nsE0jHdSSMSZBS4oyIkV12J7AkwsVFBbP/1c96284ansfJ8I7Hog=='
     async function onGetCode () {
       if (number < 60) {
         return Toast(`请${number}秒后重试`)
       }
-      const ret = await getCodeFun({ cellPhone: ruleForm.cellPhone, type: 2 }, { sign })
+      const ret = await getCodeFun({ cellPhone: ruleForm.cellPhone, type: 2 })
       if (ret.code === 100000) {
         Toast('验证码发送成功')
       } else {
@@ -75,7 +74,7 @@ export default defineComponent({
       if (!codeReg.test(ruleForm.verifyCode)) {
         return Toast('请填写正确的验证码')
       }
-      const ret = await loginFun(ruleForm, { sign })
+      const ret = await loginFun(ruleForm)
       if (ret.code === 100000) {
         if (!ret.data.perfect) {
           Toast('未查询到用户信息，请您注册')
@@ -86,7 +85,8 @@ export default defineComponent({
             $router.push('/info1')
           }, 1000);
         } else {
-          localStorage.setItem('token', ret.data.token)
+          localStorage.setItem('perfect', '1')
+          localStorage.setItem('user_id', ret.data.id)
           Toast(ret.message)
           setTimeout(() => {
             $router.go(-1)
