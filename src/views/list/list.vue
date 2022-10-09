@@ -57,12 +57,6 @@ export default defineComponent({
     const $router = useRouter()
     const list = reactive<any[]>([])
     async function getData () {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        Toast('请您登陆')
-        $router.push('/login')
-        return;
-      }
       const ret = await getList({})
       if (ret.code === 100000) {
         list.push(...ret.data.visitingCardVos)
@@ -72,8 +66,8 @@ export default defineComponent({
     }
     getData()
     function goToDetail (it: any) {
-      const token = localStorage.getItem('token')
-      if (!token) {
+      const perfect = localStorage.getItem('perfect')
+      if (perfect == '0' || !perfect) {
         Toast('请您登陆')
         $router.push('/login')
         return;

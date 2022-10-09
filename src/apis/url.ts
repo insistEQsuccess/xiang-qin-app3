@@ -1,10 +1,10 @@
 import { post } from './https-service'
-import { encrypt, decropt } from '@/util/index'
-const enStr = encrypt()
-console.log('看看加密结果-----')
-console.log(enStr)
+import { encrypt} from '@/util/index'
+// const enStr = encrypt()
+// console.log('看看加密结果-----')
+// console.log(enStr)
 // console.log('查看解密结果：---')
-// console.log(decropt(enStr))
+// console.log(JSON.parse(decropt(enStr)))
 
 // 列表接口
 export const getList = (data: any) => post('/blindDateWall/visitingCard/list', data, { sign: encrypt() })

@@ -78,6 +78,7 @@ export default defineComponent({
       const ret = await loginFun(ruleForm, { sign })
       if (ret.code === 100000) {
         if (!ret.data.perfect) {
+          localStorage.setItem('perfect', '0')
           Toast('未查询到用户信息，请您注册')
           const sendData = JSON.parse(JSON.stringify(ruleForm))
           delete sendData.type

@@ -1,7 +1,7 @@
 const CryptoJS = require("crypto-js");
 
 // 密钥
-export const MIYAO = "q6w6oQ1Jz0V82jZ9";//AES 加密
+const MIYAO = "q6w6oQ1Jz0V82jZ9";//AES 加密
 const iv = "rb!nBwXv4C%Gr^84";
 // 加密
 export function encrypt(){
@@ -15,13 +15,11 @@ export function encrypt(){
   if (token) {
     param.token = token
   }
-  let ret = CryptoJS.AES.encrypt(JSON.stringify(param), MIYAO, {
+  let ret = CryptoJS.AES.encrypt(JSON.stringify(param), CryptoJS.enc.Utf8.parse(MIYAO), {
     iv: CryptoJS.enc.Utf8.parse(iv),
-    // mode: CryptoJS.mode.CBC,
-    // padding: CryptoJS.pad.Pkcs7
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
   }).toString();
-  // ret = window.btoa(ret)
-  // return window.btoa(ret)
   return ret
 }
 // 解密
