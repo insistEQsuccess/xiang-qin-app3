@@ -203,7 +203,7 @@ export default defineComponent({
       const ret = await registerUser({ ...sendData, ...info2_param, ...info3_param, ...login_param })
       if (ret.code === 100000) {
         Toast('注册成功！')
-        $router.push('/list')
+        $router.push('/')
       } else {
         Toast(ret.message)
       }
