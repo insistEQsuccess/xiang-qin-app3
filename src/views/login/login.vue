@@ -46,6 +46,10 @@ export default defineComponent({
     let number = 60
     let timer: any = null
     async function onGetCode () {
+      const phoneReg = /^1\d{10}$/
+      if (!phoneReg.test(ruleForm.cellPhone)) {
+        return Toast('请填写正确的手机号')
+      }
       if (number < 60) {
         return Toast(`请${number}秒后重试`)
       }
