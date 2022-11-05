@@ -1,67 +1,31 @@
 <template>
   <div className='detail-box'>
-    <ul className="fav-box">
-      <li><span>讨厌所有晴天以外的天气</span></li>
-      <li><span>可是如果你来</span></li>
-      <li><span>风雨雷电我都陪你</span></li>
-      <img className='sweet' src='../../assets/img/sweet.gif' alt=""/>
-      <li><span>主动一点</span></li>
-      <li>
-        <span>也许你的命定爱情就在这里</span>
-        <!-- <img src='../../assets/img/heart.png' alt=""/> -->
-      </li>
-    </ul>
-    <div className='guest'>▼▼今日推荐嘉宾▼▼</div>
-    <div className='msg'>与其等待爱情，不如主动出击！</div>
-    <div className="pic-top">
-      <img src='../../assets/img/female.png' alt=""/>
-      征婚交友
-    </div>
-    <div className="pic-box">
-      <img :src='lifePhoto || icon' alt="../../assets/img/women.png"/>
-    </div>
-    <div className="info-title">
-      <div className="info-icon">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="top1-box">
+      <div class="user-info">
+        <div class="avatar-box">
+          <img src="https://t7.baidu.com/it/u=128764686,1887614532&fm=193&f=GIF" alt="">
+        </div>
+        <div class="info-box">
+          <div class="info1-box">
+            魏淑芬
+            <img src="../../assets/img/female.png" alt=""/>
+            <!-- <img src="../../assets/img/male.png" alt=""> -->
+          </div>
+          <div class="info2-box">女·1988·未婚·天津</div>
+        </div>
       </div>
-      自我介绍
-    </div>
-    <ul className="info-box">
-      <li v-for="(it, index) in selfIntroduce" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
-      <!-- <li>会员号：<span>2111121320</span></li>
-      <li>性别：<span>女</span></li>
-      <li>出生年月：<span>1990-05-02</span></li>
-      <li>属相：<span>马</span></li>
-      <li>身高：<span>162 CM</span></li>
-      <li>体重：<span>55 KG</span></li>
-      <li>婚姻状况：<span>离异</span></li>
-      <li>有无子女：<span>无小孩</span></li>
-      <li>星座：<span>巨蟹座</span></li>
-      <li>民族：<span>汉族</span> </li>
-      <li>学历:  <span>专科</span></li>
-      <li>目前所在地：<span>河南省 鹤壁市</span></li>
-      <li>籍贯所在：<span>河南省 安阳市 *</span></li> -->
-    </ul>
-    <div className="info-title">
-      <div className="info-icon">
-        <span></span>
-        <span></span>
-        <span></span>
+      <div class="img-box">
+        <ul>
+          <li><img src="https://t7.baidu.com/it/u=2587880631,1511870074&fm=193&f=GIF" alt=""></li>
+          <li><img src="https://t7.baidu.com/it/u=2791136945,265310095&fm=193&f=GIF" alt=""></li>
+          <li><img src="https://t7.baidu.com/it/u=3964797077,2797302290&fm=193&f=GIF" alt=""></li>
+        </ul>
       </div>
-      择偶要求
+      <div class="self-intro-box">
+
+      </div>
     </div>
-    <ul className="info-box">
-      <li v-for="(it, index) in spouseDemand" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
-      <!-- <li>年龄：<span>30 岁 ~ 35 岁</span></li>
-      <li>婚姻状况：<span>不限</span></li>
-      <li>身高：<span>172 CM ~ 180 CM</span></li>
-      <li>民族：<span>汉族</span></li> -->
-    </ul>
-    <ul className="info-box">
-      <li v-for="(it, index) in spouseRemark" :key="index">{{it.chName}}：<span>{{it.value}}</span></li>
-    </ul>
+    
   </div>
 </template>
 <script lang="ts">
@@ -117,159 +81,113 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+@import '~@/styles/adapt.scss';
 .detail-box{
+  height: 100%;
   max-width: 750px;
-  margin: 0 auto;
-  padding: 20px;
-  overflow: auto;
-  .fav-box{
-    outline: 0px;
-    letter-spacing: 0.544px;
-    font-family: -apple-system-font, BlinkMacSystemFont, Arial, sans-serif;
-    text-align: center;
-    font-size: 22px;
-    line-height: 50px;
-    word-wrap: break-word!important;
-    .sweet{
-      width: 300px;
-      height: 158px;
-    }
-    li{
+  font-family: PingFang SC-中等, PingFang SC;
+  background: #F5F6FA;
+  .top1-box{
+    @include adapt-width(750px);
+    @include adapt-height(271px);
+    background: linear-gradient(315deg, #E7F5FE 0%, #FFEAEF 100%);
+    .user-info{
+      position: relative;
+      z-index: 2;
       display: flex;
       align-items: center;
-      justify-content: center;
-      img{
-        width: 20px;
-        height: 20px;
-        margin-left: 5px;
-      }
-      span{
-        outline: 0px;
-        text-shadow: rgb(255 145 143) 2px 2px 10px;
-      }
-    }
-  }
-  .guest{
-    height: 36px;
-    margin: 30px 0 0;
-    line-height: 36px;
-    letter-spacing: 2px;
-    font-size: 22px;
-    visibility: visible;
-    box-sizing: border-box !important;
-    overflow-wrap: break-word !important;
-    color: rgb(217, 33, 66);
-    font-weight: bold;
-    text-align: center;
-  }
-  .msg{
-    margin: 10px 0 50px;
-    color: rgb(216, 21, 97);
-    font-size: 22px;
-    letter-spacing: 0.544px;
-    text-align: center;
-  }
-  .pic-top{
-    position: relative;
-    top: 2px;
-    left: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    width: 150px;
-    align-items: center;
-    // padding-right: 10px;
-    // padding-left: 10px;
-    max-width: 100%;
-    min-width: 10%;
-    border-width: 2px;
-    border-radius: 8px 8px 0px 0px;
-    border-style: solid;
-    border-color: rgb(216, 21, 97) rgb(216, 21, 97) rgb(255, 255, 255);
-    color: rgb(216, 21, 97);
-    text-align: center;
-    font-size: 18px;
-    box-sizing: border-box !important;
-    overflow-wrap: break-word !important;
-    img{
-      width: 24px;
-      height: 24px;
-      margin: 0 5px 0 0;
-    }
-  }
-  .pic-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    outline: 0px;
-    max-width: 100%;
-    display: inline-block;
-    width: 670.219px;
-    vertical-align: top;
-    border-color: rgb(216, 21, 97);
-    border-width: 2px;
-    border-radius: 0px 0px 8px 8px;
-    border-style: solid;
-    overflow: hidden;
-    visibility: visible;
-    box-sizing: border-box !important;
-    overflow-wrap: break-word !important;
-    img{
-      width: 100%;
-    }
-  }
-  .info-title{
-    display: flex;
-    align-items: center;
-    margin: 20px 0 20px;
-    font-size: 22px;
-    font-weight: bold;
-    color: rgb(216, 21, 97);
-    .info-icon{
-      display: flex;
-      flex-direction: column;
-      margin-right: 5px;
-      span{
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        margin-bottom: 3px;
-        &:nth-child(1){
-          background-color: rgba(216, 21, 97, 0.3);
+      @include adapt-height(140px);
+      @include adapt-padding(24px,0px,0px,48px);
+      .avatar-box{
+        @include adapt-width(140px);
+        @include adapt-height(140px);
+        @include adapt-margin(0px,20px,0px,0px);
+        border-radius: 50%;
+        overflow: hidden;
+        img{
+          width: 100%;
+          height: 100%;
         }
-        &:nth-child(2){
-          background-color: rgba(216, 21, 97, 0.6);
+      }
+      .info-box{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        @include adapt-height(104px);
+        // @include adapt-padding(18px,0px,0px,0px);
+        .info1-box{
+          @include adapt-font-size(28px);
+          font-weight: normal;
+          color: #7A808C;
         }
-        &:nth-child(3){
-          background-color: rgba(216, 21, 97, 1);
+        img{
+          @include adapt-width(28px);
+          @include adapt-height(28px);
+          @include adapt-margin(0px,0px,0px,12px);
+        }
+        .info2-box{
+          @include adapt-font-size(32px);
+          font-weight: normal;
+          color: #22263F;
         }
       }
     }
-  }
-  .info-box{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    li{
-      // min-height: 40px;
-      margin-bottom: 10px;
-      color: rgb(34, 34, 34);
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
-      font-size: 20px;
-      padding-left: 1.5em;
+    .img-box{
+      position: relative;
+      z-index: 1;
+      // @include adapt-top(-74px);
+      @include adapt-margin(-74px,0px,0px);
+      @include adapt-width(702px);
+      @include adapt-height(350px);
+      @include adapt-padding(110px,24px,40px,24px);
+      // margin: 0 auto;
+      box-sizing: border-box;
+      background: #FFFFFF;
+      border-radius: 24px 24px 24px 24px;
+      overflow: hidden;
+      ul{
+        position: relative;
+        display: flex;
+        flex-wrap: nowrap;
+        list-style: none;
+        &::before{
+          content: '共6张';
+          position: absolute;
+          @include adapt-right(0px);
+          @include adapt-bottom(0px);
+          @include adapt-width(200px);
+          @include adapt-height(200px);
+          @include adapt-font-size(28px);
+          @include adapt-line-height(200px);
+          text-align: center;
+          font-weight: normal;
+          color: #FFFFFF;
+          background: rgba(34,38,63,0.8);
+          @include adapt-border-radius(24px);
+        }
+        li{
+          flex-shrink: 0;
+          @include adapt-width(200px);
+          @include adapt-height(200px);
+          @include adapt-margin(0px,28px,0px,0px);
+          @include adapt-border-radius(24px);
+          overflow: hidden;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
     }
-    span{
-      color: rgb(102, 102, 102);
-      font-family: "Helvetica Neue", Helvetica, "PingFang SC", 微软雅黑, Tahoma, Arial, sans-serif;
-      font-weight: 400;
-      text-indent: 0px;
-      word-spacing: 0px;
-      text-decoration-style: initial;
-      text-decoration-color: initial;
-      display: inline !important;
+    .self-intro-box{
+      @include adapt-width(702px);
+      @include adapt-padding(40px, 24px);
+      margin: 0 auto;
+      @include adapt-border-radius(24px);
+      box-sizing: border-box;
+      background: #FFFFFF;
     }
   }
+  
 }
 </style>

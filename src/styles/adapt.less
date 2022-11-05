@@ -1,0 +1,172 @@
+@baseWidth:750;
+@color0:#FFFFFF;
+@color1:#3894FF;
+@color2:#999999;
+@color3:#FFAB00;
+@color4:#DDDDDD;
+@color5:#666666;
+@color6:#eeeeee;
+@color7:#FE3551;
+@color8:#F8FBFF;
+@color9:#CCCCCC;
+@color10:#000000;
+.adaptiveWidth(@W){
+	width:(@W/@baseWidth)*100vw;
+	max-width: ~'@{W}px';
+}
+.adaptiveHeight(@h){
+	height:(@h/@baseWidth)*100vw;
+	max-height: ~'@{h}px';
+}
+.adaptiveHeightCalc(@h){
+  height: calc(100vh - (@h/@baseWidth)*100vw);
+  @media screen and (min-width:~'@{baseWidth}px') {
+    height: calc(100vh - ~'@{h}px');
+  }
+}
+.adaptiveLineHeight(@lh){
+	line-height: (@lh/@baseWidth)*100vw;
+	@media screen and (min-width:~'@{baseWidth}px') {
+    line-height: ~'@{lh}px';
+  }
+}
+.adaptiveFontSize(@f){
+	font-size: (@f/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    font-size: ~'@{f}px';
+  }
+}
+.adaptiveMargin(@m) when(length(@m)=1){
+  margin:if(isnumber(@m),(@m/@baseWidth)*100vw,@m);
+  @media screen and (min-width:~'@{baseWidth}px') {
+    margin:if(isnumber(@m),~'@{m}px',@m);
+  }
+}
+.adaptiveMargin(@m) when(length(@m)=2){
+  margin:if(isnumber(extract(@m,1)),(extract(@m,1)/@baseWidth)*100vw,extract(@m,1)) 
+  			if(isnumber(extract(@m,2)),(extract(@m,2)/@baseWidth)*100vw,extract(@m,2));
+  @media screen and (min-width:~'@{baseWidth}px') {
+    margin:if(isnumber(extract(@m,1)),extract(@m,1)*1px,extract(@m,1)) 
+  				if(isnumber(extract(@m,2)),extract(@m,2)*1px,extract(@m,2));
+  }
+}
+.adaptiveMargin(@m) when(length(@m)=3){
+  margin:if(isnumber(extract(@m,1)),(extract(@m,1)/@baseWidth)*100vw,extract(@m,1)) 
+  			if(isnumber(extract(@m,2)),(extract(@m,2)/@baseWidth)*100vw,extract(@m,2))
+  			if(isnumber(extract(@m,3)),(extract(@m,3)/@baseWidth)*100vw,extract(@m,3));
+  @media screen and (min-width:~'@{baseWidth}px') {
+    margin:if(isnumber(extract(@m,1)),extract(@m,1)*1px,extract(@m,1)) 
+  				if(isnumber(extract(@m,2)),extract(@m,2)*1px,extract(@m,2))
+  				if(isnumber(extract(@m,3)),extract(@m,3)*1px,extract(@m,3));
+  }
+}
+.adaptiveMargin(@m) when(length(@m)=4){
+  margin:if(isnumber(extract(@m,1)),(extract(@m,1)/@baseWidth)*100vw,extract(@m,1)) 
+  			if(isnumber(extract(@m,2)),(extract(@m,2)/@baseWidth)*100vw,extract(@m,2))
+  			if(isnumber(extract(@m,3)),(extract(@m,3)/@baseWidth)*100vw,extract(@m,3))
+  			if(isnumber(extract(@m,4)),(extract(@m,4)/@baseWidth)*100vw,extract(@m,4));
+  @media screen and (min-width:~'@{baseWidth}px') {
+    margin:if(isnumber(extract(@m,1)),extract(@m,1)*1px,extract(@m,1)) 
+  				if(isnumber(extract(@m,2)),extract(@m,2)*1px,extract(@m,2))
+  				if(isnumber(extract(@m,3)),extract(@m,3)*1px,extract(@m,3))
+  				if(isnumber(extract(@m,4)),extract(@m,4)*1px,extract(@m,4));
+  }
+}
+.adaptivePadding(@m) when(length(@m)=1){
+  padding:if(isnumber(@m),(@m/@baseWidth)*100vw,@m);
+  @media screen and (min-width:~'@{baseWidth}px') {
+    padding:if(isnumber(@m),~'@{m}px',@m);
+  }
+}
+.adaptivePadding(@m) when(length(@m)=2){
+  padding:if(isnumber(extract(@m,1)),(extract(@m,1)/@baseWidth)*100vw,extract(@m,1)) 
+  			if(isnumber(extract(@m,2)),(extract(@m,2)/@baseWidth)*100vw,extract(@m,2));
+  @media screen and (min-width:~'@{baseWidth}px') {
+    padding:if(isnumber(extract(@m,1)),extract(@m,1)*1px,extract(@m,1)) 
+  				if(isnumber(extract(@m,2)),extract(@m,2)*1px,extract(@m,2));
+  }
+}
+.adaptivePadding(@m) when(length(@m)=3){
+  padding:if(isnumber(extract(@m,1)),(extract(@m,1)/@baseWidth)*100vw,extract(@m,1)) 
+  			if(isnumber(extract(@m,2)),(extract(@m,2)/@baseWidth)*100vw,extract(@m,2))
+  			if(isnumber(extract(@m,3)),(extract(@m,3)/@baseWidth)*100vw,extract(@m,3));
+  @media screen and (min-width:~'@{baseWidth}px') {
+    padding:if(isnumber(extract(@m,1)),extract(@m,1)*1px,extract(@m,1)) 
+  				if(isnumber(extract(@m,2)),extract(@m,2)*1px,extract(@m,2))
+  				if(isnumber(extract(@m,3)),extract(@m,3)*1px,extract(@m,3));
+  }
+}
+.adaptivePadding(@m) when(length(@m)=4){
+  padding:if(isnumber(extract(@m,1)),(extract(@m,1)/@baseWidth)*100vw,extract(@m,1)) 
+  			if(isnumber(extract(@m,2)),(extract(@m,2)/@baseWidth)*100vw,extract(@m,2))
+  			if(isnumber(extract(@m,3)),(extract(@m,3)/@baseWidth)*100vw,extract(@m,3))
+  			if(isnumber(extract(@m,4)),(extract(@m,4)/@baseWidth)*100vw,extract(@m,4));
+  @media screen and (min-width:~'@{baseWidth}px') {
+    padding:if(isnumber(extract(@m,1)),extract(@m,1)*1px,extract(@m,1)) 
+  				if(isnumber(extract(@m,2)),extract(@m,2)*1px,extract(@m,2))
+  				if(isnumber(extract(@m,3)),extract(@m,3)*1px,extract(@m,3))
+  				if(isnumber(extract(@m,4)),extract(@m,4)*1px,extract(@m,4));
+  }
+}
+.adaptiveTop(@t){
+  top: (@t/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    top: ~'@{t}px';
+  }
+}
+.adaptiveRight(@r){
+  right: (@r/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    right: ~'@{r}px';
+  }
+}
+.adaptiveLeft(@r){
+  left: (@r/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    left: ~'@{r}px';
+  }
+}
+.adaptiveBottom(@r){
+  bottom: (@r/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    bottom: ~'@{r}px';
+  }
+}
+.adaptiveBorderRadius(@br) when(length(@br)=1){
+  border-radius: (@br/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    border-radius: ~'@{br}px';
+  }
+}
+.adaptiveBorderRadius(@br) when(length(@br)=2){
+  border-radius: (extract(@br,1)/@baseWidth)*100vw (extract(@br,2)/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    border-radius: extract(@br,1)*1px extract(@br,2)*1px;
+  }
+}
+.adaptiveBorderRadius(@br) when(length(@br)=3){
+  border-radius: (extract(@br,1)/@baseWidth)*100vw 
+                (extract(@br,2)/@baseWidth)*100vw 
+                (extract(@br,3)/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    border-radius: extract(@br,1)*1px 
+                  extract(@br,2)*1px
+                  extract(@br,3)*1px;
+  }
+}
+.adaptiveBorderRadius(@br) when(length(@br)=4){
+  border-radius: (extract(@br,1)/@baseWidth)*100vw 
+                (extract(@br,2)/@baseWidth)*100vw 
+                (extract(@br,3)/@baseWidth)*100vw
+                (extract(@br,4)/@baseWidth)*100vw;
+  @media screen and (min-width:~'@{baseWidth}px') {
+    border-radius: extract(@br,1)*1px 
+                  extract(@br,2)*1px
+                  extract(@br,3)*1px
+                  extract(@br,4)*1px;
+  }
+}
+
+:export {
+  baseWidth:@baseWidth; 
+}

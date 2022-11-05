@@ -26,7 +26,7 @@ export default defineComponent({
 <style lang="scss">
 #app {
   height: 100%;
-  max-width: 750px;
+  max-width: 7500px;
   margin: 0 auto;
 }
 </style>
