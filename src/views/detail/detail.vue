@@ -18,7 +18,7 @@
       <div class="bg-box"></div>
       <div class="user-info">
         <div class="avatar-box">
-          <img src="https://t7.baidu.com/it/u=128764686,1887614532&fm=193&f=GIF" alt="">
+          <img :src="icon" alt="">
         </div>
         <div class="info-box">
           <div class="info1-box">
@@ -31,41 +31,26 @@
       </div>
       <div class="img-box">
         <ul>
-          <li><img src="https://t7.baidu.com/it/u=2587880631,1511870074&fm=193&f=GIF" alt=""></li>
-          <li><img src="https://t7.baidu.com/it/u=2791136945,265310095&fm=193&f=GIF" alt=""></li>
-          <li><img src="https://t7.baidu.com/it/u=3964797077,2797302290&fm=193&f=GIF" alt=""></li>
+          <li v-for="(item, index) in lifePhoto" :key="index">
+            <img :src="item" alt="">
+          </li>
         </ul>
+        <div class="photo-list-number">共{{lifePhoto.length}}张</div>
       </div>
       <div class="self-intro-box">
         <div class="intro-title">自我介绍</div>
         <ul class="intro-list">
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>性格</span><span>活泼型-开朗的性格，喜欢玩，很乐观， 话特别多，喜欢新鲜，富有多姿多彩的 创造力</span></li>
+          <li class="intro-item" v-for="(item, index) in selfIntroduce" :key="index">
+            <span>{{item.chName.slice(0,4)}}</span><span>{{item.value}}</span>
+          </li>
         </ul>
       </div>
       <div class="self-intro-box">
         <div class="intro-title">择偶要求</div>
         <ul class="intro-list">
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>私家车</span><span>有车,25w以上</span></li>
-          <li class="intro-item"><span>性格性格</span><span>活泼型-开朗的性格，喜欢玩，很乐观， 话特别多，喜欢新鲜，富有多姿多彩的 创造力</span></li>
+          <li class="intro-item" v-for="(item, index) in spouseDemand" :key="index">
+            <span>{{item.chName.slice(0,4)}}</span><span>{{item.value}}</span>
+          </li>
         </ul>
       </div>
       <div class="self-intro-box">
@@ -90,7 +75,7 @@ export default defineComponent({
     const $route = useRoute();
     const userId = $route.query.userId
     const icon = ref('')
-    const lifePhoto = ref('')
+    const lifePhoto = reactive<any[]>([])
     const selfIntroduce = reactive<any[]>([])
     const spouseDemand = reactive<any[]>([])
     const spouseRemark = reactive<any[]>([])
@@ -98,11 +83,13 @@ export default defineComponent({
       const ret = await getDetails({ userId })
       if (ret.code === 100000) {
         icon.value = ret.data.icon
-        lifePhoto.value = ret.data.lifePhoto
+        lifePhoto.length = 0;
+        lifePhoto.push(...(ret.data.lifePhoto ? ret.data.lifePhoto : []))
         selfIntroduce.length = 0
         selfIntroduce.push(...ret.data.selfIntroduce)
         spouseDemand.length = 0
         spouseDemand.push(...ret.data.spouseDemand)
+        spouseDemand[spouseDemand.length - 1].chName = '求偶重点'
         spouseRemark.length = 0
         spouseRemark.push(...ret.data.spouseRemark)
       } else {
@@ -261,26 +248,25 @@ export default defineComponent({
       background: #FFFFFF;
       border-radius: 24px 24px 24px 24px;
       overflow: hidden;
+      .photo-list-number{
+        position: absolute;
+        @include adapt-right(24px);
+        @include adapt-bottom(40px);
+        @include adapt-width(200px);
+        @include adapt-height(200px);
+        @include adapt-font-size(28px);
+        @include adapt-line-height(200px);
+        text-align: center;
+        font-weight: normal;
+        color: #FFFFFF;
+        background: rgba(34,38,63,0.8);
+        @include adapt-border-radius(24px);
+      }
       ul{
         position: relative;
         display: flex;
         flex-wrap: nowrap;
         list-style: none;
-        &::before{
-          content: '共6张';
-          position: absolute;
-          @include adapt-right(0px);
-          @include adapt-bottom(0px);
-          @include adapt-width(200px);
-          @include adapt-height(200px);
-          @include adapt-font-size(28px);
-          @include adapt-line-height(200px);
-          text-align: center;
-          font-weight: normal;
-          color: #FFFFFF;
-          background: rgba(34,38,63,0.8);
-          @include adapt-border-radius(24px);
-        }
         li{
           flex-shrink: 0;
           @include adapt-width(200px);
@@ -343,7 +329,7 @@ export default defineComponent({
           }
           span:first-child{
             flex-shrink: 0;
-            @include adapt-width(120px);
+            @include adapt-width(130px);
             @include adapt-font-size(28px);
             font-weight: normal;
             color: #7A808C;
