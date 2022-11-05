@@ -37,7 +37,7 @@
             <img :src="item" alt="">
           </li>
         </ul>
-        <div class="photo-list-number">共{{lifePhoto.length}}张</div>
+        <div class="photo-list-number" @click="previewLifeImage">共{{lifePhoto.length}}张</div>
       </div>
       <div class="self-intro-box">
         <div class="intro-title">自我介绍</div>
@@ -68,7 +68,7 @@
 import { defineComponent, reactive, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getDetails } from '@/apis/url'
-import { Toast } from 'vant'
+import { Toast, ImagePreview } from 'vant'
 
 export default defineComponent({
   name: 'Detail',
@@ -119,6 +119,9 @@ export default defineComponent({
         }
       }
     )
+    function previewLifeImage () {
+      ImagePreview(['https://unpkg.com/@vant/assets/apple-1.jpeg']);
+    }
     return {
       icon,
       lifePhoto,
@@ -129,7 +132,8 @@ export default defineComponent({
       userLocation,
       marriageStatus,
       spouseDemand,
-      spouseRemark
+      spouseRemark,
+      previewLifeImage
     }
   },
 })
