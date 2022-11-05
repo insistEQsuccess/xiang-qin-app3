@@ -50,13 +50,13 @@ $baseW: 750px;
   }
   @media screen and (min-width: 750px) {
       @if $v4 {
-          margin: $v1 $v2 $v3 $v4;
+        padding: $v1 $v2 $v3 $v4;
       } @else if $v3 {
-          margin: $v1 $v2 $v3;
+        padding: $v1 $v2 $v3;
       } @else if $v2 {
-          margin: $v1 $v2;
+        padding: $v1 $v2;
       } @else {
-          margin: $v1;
+        padding: $v1;
       }  
   }
 }

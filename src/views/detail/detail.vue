@@ -27,7 +27,6 @@
             <img v-show="gender == 1" src="../../assets/img/male.png" alt="">
           </div>
           <div class="info2-box">
-            <!-- 女·1988·未婚·天津 -->
             {{gender == 0 ? '女' : '男'}}·{{birthday}}·{{marriageStatus}}·{{userLocation}}
           </div>
         </div>
@@ -141,7 +140,8 @@ export default defineComponent({
   margin: 0 auto;
   font-family: PingFang SC-中等, PingFang SC;
   background: #F5F6FA;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   .detail-box1{
     .detail-success{
       display: flex;
@@ -207,7 +207,7 @@ export default defineComponent({
     .bg-box{
       position: absolute;
       z-index: 1;
-      @include adapt-width(750px);
+      width: 100%;
       @include adapt-height(271px);
       background: linear-gradient(315deg, #E7F5FE 0%, #FFEAEF 271px);
     }
@@ -258,10 +258,10 @@ export default defineComponent({
       position: relative;
       z-index: 2;
       // @include adapt-top(-74px);
-      @include adapt-margin(-74px,auto,0px);
       @include adapt-width(702px);
       @include adapt-height(350px);
       @include adapt-padding(110px,24px,40px,24px);
+      @include adapt-margin(-74px,auto,0px);
       // margin: 0 auto;
       box-sizing: border-box;
       background: #FFFFFF;
