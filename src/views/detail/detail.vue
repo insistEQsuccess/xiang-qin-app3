@@ -23,10 +23,13 @@
         <div class="info-box">
           <div class="info1-box">
             魏淑芬
-            <img src="../../assets/img/female.png" alt=""/>
-            <!-- <img src="../../assets/img/male.png" alt=""> -->
+            <img v-show="gender == 0" src="../../assets/img/female.png" alt=""/>
+            <img v-show="gender == 1" src="../../assets/img/male.png" alt="">
           </div>
-          <div class="info2-box">女·1988·未婚·天津</div>
+          <div class="info2-box">
+            <!-- 女·1988·未婚·天津 -->
+            {{gender == 0 ? '女' : '男'}}·{{birthday}}·{{marriageStatus}}·{{userLocation}}
+          </div>
         </div>
       </div>
       <div class="img-box">
@@ -79,6 +82,10 @@ export default defineComponent({
     const selfIntroduce = reactive<any[]>([])
     const spouseDemand = reactive<any[]>([])
     const spouseRemark = reactive<any[]>([])
+    const gender = ref(0) // 0 女 1 男
+    const birthday = ref('')
+    const userLocation = ref('') // 所在地
+    const marriageStatus = ref('') // 婚姻状态
     async function getData () {
       const ret = await getDetails({ userId })
       if (ret.code === 100000) {
@@ -87,6 +94,11 @@ export default defineComponent({
         lifePhoto.push(...(ret.data.lifePhoto ? ret.data.lifePhoto : []))
         selfIntroduce.length = 0
         selfIntroduce.push(...ret.data.selfIntroduce)
+        gender.value = selfIntroduce.splice(0, 1)[0].value === '女' ? 0 : 1;
+        birthday.value = selfIntroduce.splice(0, 1)[0].value.replace(/^(\d{4})(.*)?(\d{2})(.*)?(\d{2})(.*)?$/, '$1-$3-$5');
+        userLocation.value = selfIntroduce.splice(0, 1)[0].value;
+        marriageStatus.value = selfIntroduce.splice(0, 1)[0].value;
+
         spouseDemand.length = 0
         spouseDemand.push(...ret.data.spouseDemand)
         spouseDemand[spouseDemand.length - 1].chName = '求偶重点'
@@ -110,6 +122,10 @@ export default defineComponent({
       icon,
       lifePhoto,
       selfIntroduce,
+      gender,
+      birthday,
+      userLocation,
+      marriageStatus,
       spouseDemand,
       spouseRemark
     }
@@ -122,6 +138,7 @@ export default defineComponent({
   position: relative;
   height: 100%;
   max-width: 750px;
+  margin: 0 auto;
   font-family: PingFang SC-中等, PingFang SC;
   background: #F5F6FA;
   overflow: auto;
@@ -219,6 +236,8 @@ export default defineComponent({
         @include adapt-height(104px);
         // @include adapt-padding(18px,0px,0px,0px);
         .info1-box{
+          display: flex;
+          align-items: center;
           @include adapt-font-size(28px);
           font-weight: normal;
           color: #7A808C;
