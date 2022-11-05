@@ -1,7 +1,7 @@
 <template>
   <div className="list-box">
     <div class="list-scroll">
-      <div class="list-item" v-for="(item, index) in list" :key="index">
+      <div class="list-item" v-for="(item, index) in list" :key="index" @click="goToDetail(item)">
         <img :src="item.icon" alt="">
         <div class="item-info">
           <div class="user-info">{{item.title}}</div>

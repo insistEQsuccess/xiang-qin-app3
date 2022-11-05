@@ -22,7 +22,7 @@
         </div>
         <div class="info-box">
           <div class="info1-box">
-            魏淑芬
+            {{nickName}}
             <img v-show="gender == 0" src="../../assets/img/female.png" alt=""/>
             <img v-show="gender == 1" src="../../assets/img/male.png" alt="">
           </div>
@@ -81,6 +81,7 @@ export default defineComponent({
     const selfIntroduce = reactive<any[]>([])
     const spouseDemand = reactive<any[]>([])
     const spouseRemark = reactive<any[]>([])
+    const nickName = ref('')
     const gender = ref(0) // 0 女 1 男
     const birthday = ref('')
     const userLocation = ref('') // 所在地
@@ -93,6 +94,7 @@ export default defineComponent({
         lifePhoto.push(...(ret.data.lifePhoto ? ret.data.lifePhoto : []))
         selfIntroduce.length = 0
         selfIntroduce.push(...ret.data.selfIntroduce)
+        nickName.value = selfIntroduce.splice(0, 1)[0].value;
         gender.value = selfIntroduce.splice(0, 1)[0].value === '女' ? 0 : 1;
         birthday.value = selfIntroduce.splice(0, 1)[0].value.replace(/^(\d{4})(.*)?(\d{2})(.*)?(\d{2})(.*)?$/, '$1-$3-$5');
         userLocation.value = selfIntroduce.splice(0, 1)[0].value;
@@ -121,6 +123,7 @@ export default defineComponent({
       icon,
       lifePhoto,
       selfIntroduce,
+      nickName,
       gender,
       birthday,
       userLocation,
