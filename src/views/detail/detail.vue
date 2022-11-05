@@ -136,7 +136,7 @@ export default defineComponent({
       position: relative;
       z-index: 1;
       // @include adapt-top(-74px);
-      @include adapt-margin(-74px,0px,0px);
+      @include adapt-margin(-74px,auto,0px);
       @include adapt-width(702px);
       @include adapt-height(350px);
       @include adapt-padding(110px,24px,40px,24px);
@@ -182,7 +182,7 @@ export default defineComponent({
     .self-intro-box{
       @include adapt-width(702px);
       @include adapt-padding(40px, 24px);
-      margin: 0 auto;
+      @include adapt-margin(24px, auto, 0px);
       @include adapt-border-radius(24px);
       box-sizing: border-box;
       background: #FFFFFF;
