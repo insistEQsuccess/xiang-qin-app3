@@ -1,26 +1,15 @@
 <template>
   <div className="list-box">
-    <div className="list-inner">
-        <div className="list-item" v-for="(it, ind) in list" :key="ind" @click="goToDetail(it)">
-          <div className="item-box">
-            <div className="img-box">
-              <img :src="it.icon" alt="" />
-            </div>
-            <div className="info-box">
-              <div className="info-top">
-                <div className="info-msg">昵称：{{it.nickName}}</div>
-                <div className="info-main">{{it.title}}</div>
-              </div>
-              <div className="info-divider"></div>
-              <div className="info-bottom">
-                <div className="info-msg">月薪：10000元/月 独生子</div>
-                <div className="info-msg">{{it.userTagList.map((item)=> item.tagName).join(' ')}}</div>
-              </div>
-              <div className="info-divider"></div>
-            </div>
+    <div class="list-scroll">
+      <div class="list-item" v-for="(item, index) in list" :key="index">
+        <img :src="item.icon" alt="">
+        <div class="item-info">
+          <div class="user-info">{{item.title}}</div>
+          <div class="user-tag">
+            <div class="tag-item" v-for="(it, ind) in item.userTagList" :key="ind">{{it.tagName}}</div>
           </div>
-          <div className="item-msg">{{it.spouseKeypointValue}}</div>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +26,7 @@ export default defineComponent({
     async function getData () {
       const ret = await getList({})
       if (ret.code === 100000) {
+        list.length = 0;
         list.push(...ret.data.visitingCardVos)
       } else {
         Toast(ret.message)
@@ -68,60 +58,60 @@ export default defineComponent({
 <style lang="scss" scoped>
 @use '../../styles/adapt' as adapt;
 .list-box{
-  height: 100%;
-  padding: 10px;
-  overflow: auto;
-  .list-inner{
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  .list-item{
-    padding: 0.2rem;
-    margin-bottom: 0.2rem;
-    background: #f5f5f5;
-    border-radius: 0.1rem;
-    .item-box{
+  max-width: 750px;
+  @include adapt.adapt-padding(22px);
+  margin: 0 auto;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #F5F6FA;
+  font-family: PingFang SC-中等, PingFang SC;
+  .list-scroll{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow: auto;
+    .list-item{
+      flex-shrink: 0;
+      position: relative;
+      @include adapt.adapt-width(340px);
+      @include adapt.adapt-height(532px);
+      @include adapt.adapt-margin(0px,0px,20px);
+      @include adapt.adapt-border-radius(24px);
       overflow: hidden;
-      .img-box{
-        width: 2.3rem;
-        height: 2.6rem;
-        margin-right: 0.2rem;
-        overflow: hidden;
-        border-radius: 0.1rem;
-        float: left;
-        img{
-          width: 2.3rem;
-          height: 2.6rem;
+      background: #FFFFFF;
+      & > img{
+        width: 100%;
+      }
+      .item-info{
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        @include adapt.adapt-padding(0px, 26px, 0px);
+        background: #fff;
+        .user-info{
+          @include adapt.adapt-margin(24px, 0px, 24px);
+          @include adapt.adapt-font-size(32px);
+          font-weight: normal;
+          color: #22263F;
+        }
+        .user-tag{
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          .tag-item{
+            flex-shrink: 0;
+            @include adapt.adapt-width(76px);
+            @include adapt.adapt-height(36px);
+            @include adapt.adapt-margin(0px, 0px, 24px);
+            @include adapt.adapt-border-radius(4px);
+            @include adapt.adapt-font-size(20px);
+            @include adapt.adapt-line-height(36px);
+            font-weight: normal;
+            color: #7A808C;
+            text-align: center;
+            background: #F2F3F5;
+          }
         }
       }
-      .info-box{
-        overflow: auto;
-        .info-bottom{
-          padding: 0.05rem 0;
-        }
-        .info-divider{
-          padding: 0.05rem 0;
-          border-radius: 0.1rem;
-          background: #fff;
-        }
-        .info-msg{
-          padding: 0 0 0.1rem;
-          color: #555;
-          font-size: 0.3rem;
-        }
-        .info-main{
-          padding: 0.1rem 0;
-          color: #333;
-          font-size: 0.4rem;
-        }
-      }
-    }
-    .item-msg{
-      padding: 0.2rem 0 0;
-      font-size: 0.3rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
   }
 }
