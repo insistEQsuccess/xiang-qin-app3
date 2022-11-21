@@ -1,15 +1,15 @@
 <template>
   <div className='detail-box'>
     <div class="detail-box1">
-      <div class="detail-success">
-        <div class="phone-number"><span>TA的联系方式：</span><span>18515871492</span></div>
-        <img src="../../assets/img/copy-btn.png" alt="">
+      <div class="detail-success" v-if="exchangeCardUserVo.exchangeCardStatus === 2">
+        <div class="phone-number"><span>TA的联系方式：</span><span>{{exchangeCardUserVo.cellPhone}}</span></div>
+        <img src="../../assets/img/copy-btn.png" alt="" @click="handleCopy">
       </div>
-      <div class="detail-fail">
+      <div class="detail-fail" v-if="exchangeCardUserVo.exchangeCardStatus === 3">
         <span>对方拒绝与您交换联系方式，一周内不能重新发起</span>
         <img src="../../assets/img/detail-fail.png" alt="">
       </div>
-      <div class="detail-expire">
+      <div class="detail-expire" v-if="exchangeCardUserVo.exchangeCardStatus === 4">
         <span>您发起的交换联系方式已过期，TA未能及时查看，您可以通过以下方式进行联系： 1.通过发送短信方式提醒TA，短信提醒2元一条； 2.通过官方客服联系TA，平台将收取25元服务费，联系失败将退还您的费用。</span>
         <img src="../../assets/img/detail-expire.png" alt="">
       </div>
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="img-box">
+      <div class="img-box" v-show="lifePhoto.length">
         <ul>
           <li v-for="(item, index) in lifePhoto" :key="index">
             <img :src="item" alt="">
@@ -61,6 +61,13 @@
           <li class="intro-item">活泼型-开朗的性格，喜欢玩，很乐观， 话特别多，喜欢新鲜，富有多姿多彩的 创造力</li>
         </ul>
       </div>
+      <div class="bottom-btn">
+        <div class="exchange-btn" v-if="exchangeCardUserVo.exchangeCardStatus === ''"><img src="../../assets/img/exchange.png" alt=""></div>
+        <div class="two-btn" v-if="exchangeCardUserVo.exchangeCardStatus === 4">
+          <img src="../../assets/img/btn-customer.png" alt="">
+          <img src="../../assets/img/btn-msg.png" alt="">
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -86,6 +93,13 @@ export default defineComponent({
     const birthday = ref('')
     const userLocation = ref('') // 所在地
     const marriageStatus = ref('') // 婚姻状态
+    const exchangeCardUserVo = reactive<Dict>({
+      exchangeCardId: "", // 交换信息id
+      exchangeCardStatus: "", // #交换状态 1:交换中 2:已交换 3:拒绝 4:交换过期
+      exchangeCardButtonValue: "交换", // 当前交换信息按钮展示
+      exchangeCardClickEnable: true, // 当前交换信息按钮是否可点击
+      cellPhone: "" // 对方交换信息电话
+    })
     async function getData () {
       const ret = await getDetails({ userId })
       if (ret.code === 100000) {
@@ -105,6 +119,9 @@ export default defineComponent({
         spouseDemand[spouseDemand.length - 1].chName = '求偶重点'
         spouseRemark.length = 0
         spouseRemark.push(...ret.data.spouseRemark)
+        for (const k in ret.data.exchangeCardUserVo) {
+          exchangeCardUserVo[k] = ret.data.exchangeCardUserVo[k]
+        }
       } else {
         Toast(ret.message)
       }
@@ -122,6 +139,17 @@ export default defineComponent({
     function previewLifeImage () {
       ImagePreview(['https://unpkg.com/@vant/assets/apple-1.jpeg']);
     }
+    function handleCopy () {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      input.setAttribute('value', exchangeCardUserVo.cellPhone);
+      document.body.appendChild(input);
+      input.setSelectionRange(0, 9999);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      Toast('复制成功')
+    }
     return {
       icon,
       lifePhoto,
@@ -133,7 +161,9 @@ export default defineComponent({
       marriageStatus,
       spouseDemand,
       spouseRemark,
-      previewLifeImage
+      exchangeCardUserVo,
+      previewLifeImage,
+      handleCopy
     }
   },
 })
@@ -308,6 +338,8 @@ export default defineComponent({
       }
     }
     .self-intro-box{
+      position: relative;
+      z-index: 1;
       @include adapt-width(702px);
       @include adapt-padding(40px, 24px);
       @include adapt-margin(24px, auto, 0px);
@@ -368,6 +400,24 @@ export default defineComponent({
             color: #22263F;
           }
         }
+      }
+    }
+    .exchange-btn{
+      @include adapt-width(702px);
+      @include adapt-margin(40px, auto, 40px);
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .two-btn{
+      display: flex;
+      justify-content: space-between;
+      @include adapt-width(560px);
+      @include adapt-margin(40px, auto, 40px);
+      img{
+        @include adapt-width(260px);
+        @include adapt-height(100px);
       }
     }
   }
