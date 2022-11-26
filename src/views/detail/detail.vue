@@ -61,12 +61,12 @@
           <li class="intro-item">活泼型-开朗的性格，喜欢玩，很乐观， 话特别多，喜欢新鲜，富有多姿多彩的 创造力</li>
         </ul>
       </div>
-      <div class="bottom-btn">
-        <div class="exchange-btn" v-if="exchangeCardUserVo.exchangeCardStatus === ''"><img src="../../assets/img/exchange.png" alt=""></div>
-        <div class="two-btn" v-if="exchangeCardUserVo.exchangeCardStatus === 4">
-          <img src="../../assets/img/btn-customer.png" alt="">
-          <img src="../../assets/img/btn-msg.png" alt="">
-        </div>
+    </div>
+    <div class="bottom-btn">
+      <div class="exchange-btn" v-if="exchangeCardUserVo.exchangeCardStatus === ''"><img src="../../assets/img/exchange.png" alt=""></div>
+      <div class="two-btn" v-if="exchangeCardUserVo.exchangeCardStatus === 4">
+        <img src="../../assets/img/btn-customer.png" alt="">
+        <img src="../../assets/img/btn-msg.png" alt="">
       </div>
     </div>
   </div>
@@ -240,6 +240,7 @@ export default defineComponent({
   }
   .detail-box2{
     position: relative;
+    @include adapt-padding(0px, 0px, 180px, 0px);
     overflow: auto;
     .bg-box{
       position: absolute;
@@ -402,6 +403,15 @@ export default defineComponent({
         }
       }
     }
+  }
+  .bottom-btn{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 6;
+    overflow: auto;
+    // background: #fff;
     .exchange-btn{
       @include adapt-width(702px);
       @include adapt-margin(40px, auto, 40px);
