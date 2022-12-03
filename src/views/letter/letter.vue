@@ -90,6 +90,8 @@ export default defineComponent({
 div.letter-box{
   position: relative;
   height: 100%;
+  @include adapt-width(750px);
+  @include adapt-margin(0px, auto, 0px);
   font-family: PingFang SC-粗体, PingFang SC;
   background: rgba(255, 243, 228, 1);
   .theme-pic{
