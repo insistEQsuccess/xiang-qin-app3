@@ -56,6 +56,15 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('@/views/login/login.vue')
   },
+  {
+    path: '/letter',
+    name: 'Letter',
+    meta: {
+      cache: false,
+      title: '来自开发者的信'
+    },
+    component: () => import('@/views/letter/letter.vue')
+  },
 ]
 
 const router = createRouter({
