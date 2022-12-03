@@ -94,6 +94,7 @@ div.letter-box{
   @include adapt-margin(0px, auto, 0px);
   font-family: PingFang SC-粗体, PingFang SC;
   background: rgba(255, 243, 228, 1);
+  overflow: auto;
   .theme-pic{
     position: relative;
     z-index: 3;
