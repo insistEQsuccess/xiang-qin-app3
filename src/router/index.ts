@@ -65,6 +65,15 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('@/views/letter/letter.vue')
   },
+  {
+    path: '/groups',
+    name: 'Groups',
+    meta: {
+      cache: false,
+      title: '微信相亲群'
+    },
+    component: () => import('@/views/groups/groups.vue')
+  },
 ]
 
 const router = createRouter({

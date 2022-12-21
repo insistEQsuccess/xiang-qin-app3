@@ -18,3 +18,7 @@ export const getCodeFun = (data: any, config: any) => post('/sms/send', data, co
 export const registerUser = (data: any) => post('/user/register', data, { sign: encrypt() })
 // 用户详情
 export const getDetails = (data: any) => post('/user/h5/details', data, { sign: encrypt() })
+// 查询相亲群
+export const getGroupsList = (data: any) => post('/dating/circle/group/list', data, { sign: encrypt() })
+// 解锁相亲群
+export const deblocking = (data: any) => post('/dating/circle/group/deblocking', data, { sign: encrypt() })
